@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tri Ân Ngày Nhà Giáo Việt Nam 20/11 - Kính Tặng Cô</title>
+  
+  <!-- Google Fonts: Font chữ uốn lượn thơ mộng & Quicksand hiện đại -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================
+       1. TÔN MÀU & THIẾT LẬP CHUNG (PINK PASTEL)
+       ========================================== */
+    :root {
+      --bg-gradient: linear-gradient(135deg, #fff5f7 0%, #ffe3ec 50%, #fcd5ce 100%);
+      --primary-pink: #ffb7c5;
+      --accent-pink: #ff85a2;
+      --deep-pink: #d94f75;
+      --dark-pink: #8c2a45;
+      --text-color: #5a3d46;
+      --white-trans: rgba(255, 255, 255, 0.92);
+      --shadow-soft: 0 10px 30px rgba(217, 79, 117, 0.15);
+      --shadow-glow: 0 0 25px rgba(255, 133, 162, 0.6);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-color);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Canvas hiệu ứng hoa hồng rơi toàn trang */
+    #petalCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* ==========================================
+       2. INTRO OVERLAY (MÀN HÌNH MỞ THIỆP)
+       ========================================== */
+    .intro-overlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 245, 247, 0.98), rgba(255, 227, 236, 0.98));
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .intro-overlay.fade-out {
+      opacity: 0;
+      transform: scale(1.1);
+      pointer-events: none;
+    }
+
+    .envelope-card {
+      background: #ffffff;
+      padding: 45px 35px;
+      border-radius: 28px;
+      box-shadow: var(--shadow-soft), 0 0 50px rgba(255, 183, 197, 0.5);
+      text-align: center;
+      max-width: 440px;
+      width: 90%;
+      border: 2px solid #fff0f3;
+      animation: pulseCard 3s infinite ease-in-out;
+    }
+
+    .heart-icon {
+      font-size: 55px;
+      margin-bottom: 15px;
+      animation: bounce 2s infinite;
+    }
+
+    .envelope-card h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      color: var(--deep-pink);
+      margin-bottom: 10px;
+    }
+
+    .envelope-card p {
+      font-size: 1rem;
+      color: #7d5a65;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    /* Button thiết kế chung */
+    .btn-primary, .btn-gift {
+      background: linear-gradient(45deg, var(--accent-pink), var(--deep-pink));
+      color: white;
+      border: none;
+      padding: 15px 32px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 35px;
+      cursor: pointer;
+      box-shadow: 0 5px 20px rgba(217, 79, 117, 0.35);
+      transition: all 0.3s ease;
+      font-family: 'Quicksand', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover, .btn-gift:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: var(--shadow-glow);
+    }
+
+    /* ==========================================
+       3. NỘI DUNG CHÍNH (MAIN CONTENT)
+       ========================================== */
+    .main-content {
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 50px 20px 80px;
+      position: relative;
+      z-index: 20;
+      transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .main-content.hidden {
+      display: none !important;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--deep-pink);
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border: 1px solid var(--primary-pink);
+      box-shadow: 0 3px 10px rgba(255, 183, 197, 0.3);
+      display: inline-block;
+    }
+
+    .title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.5rem;
+      color: var(--deep-pink);
+      margin: 18px 0 8px;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .subtitle {
+      color: #8c6270;
+      font-size: 1.15rem;
+    }
+
+    /* Bức thư tri ân */
+    .letter-section {
+      margin-bottom: 45px;
+    }
+
+    .letter-card {
+      background: var(--white-trans);
+      backdrop-filter: blur(8px);
+      border-radius: 24px;
+      padding: 40px 35px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      position: relative;
+      line-height: 1.9;
+    }
+
+    .salutation {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--deep-pink);
+      margin-bottom: 15px;
+    }
+
+    .letter-body p {
+      margin-bottom: 16px;
+      text-align: justify;
+      font-size: 1.05rem;
+      color: #4a3038;
+    }
+
+    .signature {
+      text-align: right;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.9rem;
+      color: var(--deep-pink);
+      margin-top: 25px;
+    }
+
+    .gift-action-container {
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    /* ==========================================
+       4. CINEMATIC OVERLAY & KÝ ỨC BAY TỪ TÂM
+       ========================================== */
+    /* Màn hình tối sầm chuẩn điện ảnh khi bấm quà */
+    .cinematic-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 8, 12, 0.88);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+
+    .cinematic-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Container chứa các ảnh ký ức bay */
+    .memory-tunnel-container {
+      position: fixed;
+      inset: 0;
+      z-index: 210;
+      pointer-events: none;
+      overflow: hidden;
+      perspective: 1000px;
+    }
+
+    /* Tấm ảnh ký ức phun trào từ tâm */
+    .memory-photo-node {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 220px;
+      height: 260px;
+      background: #ffffff;
+      padding: 12px 12px 20px;
+      border-radius: 16px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 20px rgba(255, 183, 197, 0.4);
+      transform-origin: center center;
+      will-change: transform, opacity;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .memory-photo-node img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .memory-photo-node .caption {
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--deep-pink);
+      margin-top: 10px;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    /* Hiệu ứng chớp sáng bừng màn hình (Flash Effect) */
+    .flash-overlay {
+      position: fixed;
+      inset: 0;
+      background: #ffffff;
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease-out;
+    }
+
+    .flash-overlay.active {
+      opacity: 1;
+    }
+
+    /* ==========================================
+       5. PHẦN VIDEO TRI ÂN BÊN DƯỚI
+       ========================================== */
+    .video-section {
+      margin-top: 60px;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .video-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-title {
+      text-align: center;
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.8rem;
+      color: var(--deep-pink);
+      margin-bottom: 5px;
+    }
+
+    .section-desc {
+      text-align: center;
+      color: #8c6270;
+      font-size: 1rem;
+      margin-bottom: 30px;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* Ratio 16:9 */
+      background: #000;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(217, 79, 117, 0.25), 0 0 30px rgba(255, 133, 162, 0.4);
+      border: 4px solid #ffffff;
+    }
+
+    .video-wrapper iframe, 
+    .video-wrapper video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Video Placeholder khi chưa cài link */
+    .video-placeholder-container {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #2b1720 0%, #4a1f31 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #ffc2d1;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .play-icon-circle {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(45deg, var(--accent-pink), var(--deep-pink));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      color: white;
+      margin-bottom: 15px;
+      box-shadow: var(--shadow-glow);
+      cursor: pointer;
+      animation: pulseCard 2s infinite;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 70px;
+      color: #a07080;
+      font-size: 0.9rem;
+    }
+
+    /* Keyframes */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes pulseCard {
+      0%, 100% { box-shadow: var(--shadow-soft), 0 0 25px rgba(255, 183, 197, 0.4); }
+      50% { box-shadow: var(--shadow-soft), 0 0 45px rgba(255, 133, 162, 0.7); }
+    }
+
+    /* Trang trí nhánh hoa hồng Intro */
+.heart-icon.rose-branch img {
+  width: 75px;
+  height: auto;
+  filter: drop-shadow(0 4px 10px rgba(240, 0, 68, 0.4));
+  animation: roseSway 3s infinite ease-in-out;
+}
+
+@keyframes roseSway {
+  0%, 100% { transform: rotate(-5deg) scale(1); }
+  50% { transform: rotate(5deg) scale(1.08); }
+}
+  </style>
+</head>
+<body>
+
+  <!-- Canvas hoa hồng rơi -->
+  <canvas id="petalCanvas"></canvas>
+
+  <!-- Nhạc nền Piano du dương -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=piano-moment-114870.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- MÀN HÌNH INTRO (PHONG BÌ MỞ ĐẦU) -->
+  <div id="introOverlay" class="intro-overlay">
+    <div class="envelope-card">
+       <div class="heart-icon rose-branch">
+  <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Nhánh hoa hồng" />
+</div>
+      <h2>Kính Tặng Cô Kính Yêu</h2>
+      <p>Gửi trọn yêu thương & lòng biết ơn sâu sắc nhân ngày Nhà Giáo Việt Nam 20/11 ✨</p>
+      <button id="btnOpen" class="btn-primary">
+        💌 Mở Thiệp
+      </button>
+    </div>
+  </div>
+
+  <!-- NỘI DUNG CHÍNH (SAU KHU MỞ THIỆP) -->
+  <div id="mainContent" class="main-content hidden">
+
+    <!-- Header -->
+    <header class="header">
+      <span class="badge">Tri Ân Ngày Nhà Giáo Việt Nam 20/11</span>
+      <h1 class="title">Chúc Mừng Ngày 20/11</h1>
+      <p class="subtitle">Người thắp sáng ước mơ và dìu dắt từng thế hệ học trò...</p>
+    </header>
+
+    <!-- Bức Thư Tri Ân -->
+    <section class="letter-section">
+      <div class="letter-card">
+        <div class="salutation">Kính gửi Cô giáo thân yêu,</div>
+        <div class="letter-body">
+          <p>
+            Nhân ngày Nhà giáo Việt Nam 20/11, con/chúng con xin kính gửi đến Cô những lời chúc tốt đẹp nhất. 
+            Cảm ơn Cô đã luôn kiên nhẫn, tận tụy và truyền lửa nhiệt huyết trong từng giờ học, dìu dắt chúng con nên người.
+          </p>
+          <p>
+            Kính chúc Cô luôn dồi dào sức khỏe, tràn ngập niềm vui, sự thanh thản trong tâm hồn và mãi giữ trọn tình yêu với sự nghiệp trồng người cao quý!
+          </p>
+        </div>
+        <div class="signature">Học trò kính thương của Cô ❤️</div>
+      </div>
+    </section>
+
+    <!-- Nút bấm Kích hoạt hiệu ứng Thước Phim Ký Ức -->
+    <div class="gift-action-container">
+      <button id="btnGift" class="btn-gift">
+        🎁 Món Quà Bất Ngờ ✨
+      </button>
+    </div>
+
+    <!-- PHẦN VIDEO TRI ÂN CỦA CÔ (XUẤT HIỆN SAU CÚ CHỚP SÁNG) -->
+    <section id="videoSection" class="video-section">
+      <h2 class="section-title">✨ Video Tri Ân Kính Tặng Cô ✨</h2>
+      <p class="section-desc">(Những thước phim đong đầy ký ức và tình cảm dành tặng Cô)</p>
+
+      <div class="video-wrapper">
+        <!-- Ní có thể thay iframe YouTube hoặc dùng thẻ <video> tại đây -->
+        <!-- Ví dụ YouTube Iframe mẫu: 
+        <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe> 
+        -->
+        
+        <!-- Frame Placeholder đẹp mắt sẵn sàng -->
+        <div class="video-placeholder-container" id="videoPlaceholder">
+          <div class="play-icon-circle">▶</div>
+          <h3 style="font-family:'Dancing Script', cursive; font-size: 2rem; margin-bottom: 8px;">Thước Phim Tri Ân 20/11</h3>
+          <p style="font-size: 0.95rem; opacity: 0.8;">(Ní chỉ cần dán link Video YouTube hoặc File video .mp4 của lớp vào code là sẵn sàng phát nhé!)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>20/11 ❤️</p>
+    </footer>
+
+  </div>
+
+  <!-- OVERLAY MỜ TỐI ĐIỆN ẢNH & CHỚP SÁNG -->
+  <div id="cinematicOverlay" class="cinematic-overlay"></div>
+  <div id="memoryTunnelContainer" class="memory-tunnel-container"></div>
+  <div id="flashOverlay" class="flash-overlay"></div>
+
+  <script>
+    // ==========================================
+    // 1. HIỆU ỨNG CÁNH HOA HỒNG RƠI
+    // ==========================================
+    const canvas = document.getElementById("petalCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const petals = [];
+    const petalCount = 42;
+
+    class Petal {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * -height;
+        this.size = Math.random() * 12 + 8;
+        this.speedY = Math.random() * 1.5 + 0.8;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.angle = Math.random() * 360;
+        this.spin = Math.random() * 2 - 1;
+        this.color = `rgba(${Math.floor(220 + Math.random() * 35)}, ${Math.floor(
+          90 + Math.random() * 50
+        )}, ${Math.floor(120 + Math.random() * 40)}, ${Math.random() * 0.4 + 0.55})`;
+      }
+
+      update() {
+        this.y += this.speedY;
+        this.x += Math.sin(this.y / 30) + this.speedX;
+        this.angle += this.spin;
+
+        if (this.y > height + 20) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.angle * Math.PI) / 180);
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(-this.size / 2, -this.size / 2, -this.size, this.size / 3, 0, this.size);
+        ctx.bezierCurveTo(this.size, this.size / 3, this.size / 2, -this.size / 2, 0, 0);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < petalCount; i++) {
+      petals.push(new Petal());
+    }
+
+    function animatePetals() {
+      ctx.clearRect(0, 0, width, height);
+      petals.forEach((p) => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animatePetals);
+    }
+    animatePetals();
+
+    // ==========================================
+    // 2. XỬ LÝ SỰ KIỆN MỞ THIỆP (INTRO)
+    // ==========================================
+    const btnOpen = document.getElementById("btnOpen");
+    const introOverlay = document.getElementById("introOverlay");
+    const mainContent = document.getElementById("mainContent");
+    const bgMusic = document.getElementById("bgMusic");
+
+    btnOpen.addEventListener("click", () => {
+      // Bật nhạc
+      bgMusic.play().catch((e) => console.log("Auto-play blocked:", e));
+
+      // Mở màn hình chính
+      introOverlay.classList.add("fade-out");
+      setTimeout(() => {
+        mainContent.classList.remove("hidden");
+      }, 500);
+    });
+
+    // ==========================================
+    // 3. HIỆU ỨNG ĐƯỜNG HẦM KÝ ỨC & CHỚP SÁNG
+    // ==========================================
+    const btnGift = document.getElementById("btnGift");
+    const cinematicOverlay = document.getElementById("cinematicOverlay");
+    const memoryContainer = document.getElementById("memoryTunnelContainer");
+    const flashOverlay = document.getElementById("flashOverlay");
+    const videoSection = document.getElementById("videoSection");
+
+    // Danh sách ảnh mẫu (Sau này ní có thể thay các link ảnh thật của lớp vào đây)
+    const memoryPhotos = [
+      { url: "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=500", caption: "Kỷ niệm ngày đầu đến lớp ❤️" },
+      { url: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=500", caption: "Giờ học hăng hái cùng Cô ✨" },
+      { url: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=500", caption: "Nụ cười rạng rỡ của Cô 🌸" },
+      { url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500", caption: "Những khoảnh khắc ấm áp 💖" },
+      { url: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=500", caption: "Tình cảm thân thương Lớp mình 💐" },
+      { url: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=500", caption: "Kính chúc Cô luôn hạnh phúc 🌹" }
+    ];
+
+    btnGift.addEventListener("click", () => {
+      // 1. Màn hình tối sầm dần
+      cinematicOverlay.classList.add("active");
+      btnGift.disabled = true;
+
+      // 2. Bắt đầu phun trào RẤT NHIỀU ảnh từ tâm màn hình
+      const totalPhotosToSpawn = 18; // Số lượng lượt ảnh bay dồn dập
+      let spawnedCount = 0;
+
+      const spawnInterval = setInterval(() => {
+        if (spawnedCount >= totalPhotosToSpawn) {
+          clearInterval(spawnInterval);
+          
+          // Sau khi ảnh cuối cùng sắp tan biến -> Chớp sáng màn hình
+          setTimeout(() => {
+            triggerFlashAndShowVideo();
+          }, 1200);
+          return;
+        }
+
+        const photoData = memoryPhotos[spawnedCount % memoryPhotos.length];
+        spawnMemoryPhoto(photoData, spawnedCount);
+        spawnedCount++;
+      }, 250); // Mỗi 0.25s phun 1 tấm
+    });
+
+    // Hàm tạo 1 tấm ảnh phóng to từ sâu bên trong ra sát mép màn hình
+    function spawnMemoryPhoto(data, index) {
+      const card = document.createElement("div");
+      card.className = "memory-photo-node";
+
+      card.innerHTML = `
+        <img src="${data.url}" alt="Kỷ niệm">
+        <div class="caption">${data.caption}</div>
+      `;
+
+      memoryContainer.appendChild(card);
+
+      // Tính toán hướng góc bay ngẫu nhiên tỏa rộng ra mép màn hình
+      const angle = Math.random() * Math.PI * 2;
+      const distance = Math.min(window.innerWidth, window.innerHeight) * (0.6 + Math.random() * 0.4);
+      const targetX = Math.cos(angle) * distance;
+      const targetY = Math.sin(angle) * distance;
+      const rotateDeg = (Math.random() - 0.5) * 40; // Xoay góc nhẹ từ -20 đến 20 deg
+
+      // Animation Javascript dùng Web Animations API cho siêu mượt
+      const duration = 2200; // Tốc độ bay 2.2 giây
+
+      const animation = card.animate([
+        {
+          transform: `translate(-50%, -50%) scale(0.05) rotate(0deg)`,
+          opacity: 0
+        },
+        {
+          opacity: 1,
+          offset: 0.15
+        },
+        {
+          opacity: 1,
+          offset: 0.75
+        },
+        {
+          transform: `translate(calc(-50% + ${targetX}px), calc(-50% + ${targetY}px)) scale(1.6) rotate(${rotateDeg}deg)`,
+          opacity: 0
+        }
+      ], {
+        duration: duration,
+        easing: "cubic-bezier(0.15, 0.85, 0.35, 1)",
+        fill: "forwards"
+      });
+
+      // Xóa phần tử khỏi RAM sau khi bay xong
+      animation.onfinish = () => {
+        card.remove();
+      };
+    }
+
+    // 3. Hàm kích hoạt Chớp sáng (Flash) & Cuộn đến Video
+    function triggerFlashAndShowVideo() {
+      // Bật flash chớp sáng
+      flashOverlay.classList.add("active");
+
+      setTimeout(() => {
+        // Tắt overlay mờ tối & ẩn hiệu ứng
+        cinematicOverlay.classList.remove("active");
+        
+        // Tắt chớp sáng
+        flashOverlay.classList.remove("active");
+
+        // Hiện section video & cuộn mượt xuống
+        videoSection.classList.add("visible");
+        videoSection.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        btnGift.textContent = "🌸 Thước Phim Kỷ Niệm Kính Tặng Cô 🌸";
+      }, 200); // Độ trễ lóe sáng cực nhanh 0.2s
+    }
+  </script>
+</body>
+</html>
